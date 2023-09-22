@@ -13,6 +13,9 @@ let ratings = document.getElementById('ratings');
 let img = document.getElementById('img');
 
 let movieSearchContainer = document.getElementById('movie-search-container');
+///////////////
+let failedContainer = document.getElementById('failed-container');
+///////////
 movieSearchContainer.classList.add('d-none');
 let loader = document.getElementById('animation-loader');
 loader.classList.add('d-none');
@@ -23,21 +26,46 @@ function findMovie(){
     let url = api + movieName.value;
 
     fetch(url).then((response)=>{
+        // console.log(response);
+        // if(response.Error == "movie not found!"){
+        //     console.log("movie not found");
+        // }
+         
+        //  console.log(response.status);
+        //  console.log(response.ok);
         return response.json();
     }).then((response)=>{
         loader.classList.add('d-none');
-        movieSearchContainer.classList.remove('d-none');
-        title.innerText = response.Title;
-        director.innerText = response.Director;
-        actors.innerText = response.Actors;
-        genre.innerText = response.Genre;
-        desc.innerText = response.Plot;
-        awards.innerText = response.Awards;
-        writer.innerText = response.Writer;
-        collection.innerText = response.BoxOffice;
-        date.innerText = response.Released;
-        ratings.innerText = response.imdbRating;
-        img.src = response.Poster;
+        if(response.Title == undefined){
+            let failedResponse = document.getElementById('failed');
+            failedContainer.classList.remove('d-none');
+            failedResponse.innerHTML = "";
+            failedResponse.innerText = "Movie Not Found";
+            //console.log("movie not found");
+            movieSearchContainer.classList.add('d-none');
+            // return;
+            
+        }else{
+            // failedResponse.innerHTML = "";
+            
+            movieSearchContainer.classList.remove('d-none');
+            title.innerText = response.Title;
+            director.innerText = response.Director;
+            actors.innerText = response.Actors;
+            genre.innerText = response.Genre;
+            desc.innerText = response.Plot;
+            awards.innerText = response.Awards;
+            writer.innerText = response.Writer;
+            collection.innerText = response.BoxOffice;
+            date.innerText = response.Released;
+            ratings.innerText = response.imdbRating;
+            img.src = response.Poster;
+            failedContainer.classList.add('d-none');
+            // failedResponse.innerHTML = "";
+            // failedResponse.innerText = "";
+
+        }
+        
 
     })
 }

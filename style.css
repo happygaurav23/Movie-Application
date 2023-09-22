@@ -71,6 +71,13 @@ input:focus{
     justify-content: center;
 }
 
+.failed{
+    color: #fff;
+    font-size: 100px;
+    font-weight: 700;
+    text-align: center;
+}
+
 .loader {
     border: 2px solid #f3f3f343; /* Light grey */
     border-top: 2px solid red; /* Blue */
